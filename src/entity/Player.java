@@ -164,6 +164,9 @@ public class Player  extends Entity{
                         gp.playMusicOneTime(3);
                         gp.obj[i] = null;
                         hasKey--;
+                        gp.ui.showMessage("The door is opened !!");
+                    }else{
+                        gp.ui.showMessage("You need a key !!");
                     }
                     System.out.println("Key : "+hasKey);
                     break;
@@ -171,6 +174,12 @@ public class Player  extends Entity{
                     gp.playMusicOneTime(2);
                     gp.player.speed +=2;
                     gp.obj[i] = null;
+                    gp.ui.showMessage("Speed up!");
+                    break;
+                case "Chest":
+                    gp.ui.gameFinished = true;
+                    gp.stopMusic();
+                    gp.playMusicOneTime(4); //sound จบเกม
                     break;
 
             }
