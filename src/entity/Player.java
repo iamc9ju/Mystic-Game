@@ -49,11 +49,11 @@ public class Player  extends Entity{
         down1 = setup("/player/sword_down_1");
         down2 = setup("/player/sword_down_2");
         right1 = setup("/player/sword_right_1");
-        right2 = setup("/player/sword_right_1");
+        right2 = setup("/player/sword_right_2");
         left1 = setup("/player/sword_left_1");
-        left2 = setup("/player/sword_left_1");
+        left2 = setup("/player/sword_left_2");
         up1 = setup("/player/sword_up_1");
-        up2 = setup("/player/sword_up_1");
+        up2 = setup("/player/sword_up_2");
     }
 
     public BufferedImage setup(String imagePath){
