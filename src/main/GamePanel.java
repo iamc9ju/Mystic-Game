@@ -184,7 +184,6 @@ public class GamePanel extends JPanel implements Runnable {
             g2.drawString("Drawtime : "+ passed,10,400);
             System.out.println("Draw Time : " + passed);
         }
-
         g2.dispose(); //คืนทรัพยากร
     }
 
