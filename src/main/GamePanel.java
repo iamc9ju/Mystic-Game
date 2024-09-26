@@ -7,6 +7,7 @@ import java.awt.Graphics2D;
 
 import javax.swing.JPanel;
 
+import entity.Entity;
 import entity.Player;
 import object.SuperObject;
 import tile.TileManager;
@@ -23,6 +24,7 @@ public class GamePanel extends JPanel implements Runnable {
     final int screenHeight = tileSize * maxScreenRow; //576 pixels
 
     // WORLD SETTINGS
+
     public final int maxWorldCol = 50; //เเมพกว้างสุดกี่คอลัม
     public final int maxWorldRow = 50;
 
@@ -31,7 +33,7 @@ public class GamePanel extends JPanel implements Runnable {
 
     //System
     TileManager tileManager = new TileManager(this);
-    KeyHandler keyH = new KeyHandler();
+    KeyHandler keyH = new KeyHandler(this);
     Thread gameThread;
 
     Sound music = new Sound(); //ต้องใช้ 2 อินสแตนเพื่อจัดการกับระบบเสียง
@@ -44,6 +46,13 @@ public class GamePanel extends JPanel implements Runnable {
     //Entity and object
     public Player player = new Player(this, keyH);
     public SuperObject obj[] = new SuperObject[10]; //แสดง obj ได้พร้อมกัน 10 Object
+    public Entity npc[] = new Entity[10]; //แสดง npc , monster บนmap
+
+
+    //Game State
+    public int gameState;
+    public final int playState = 1;
+    public final int pauseState = 2;
 
 
     public GamePanel() {
@@ -56,8 +65,11 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     public void setUpGame(){
+        assetSetter.setNpc();
         assetSetter.setObject(); //set object บน map
         playMusic(0); //เล่นเสียงพื้นหลัง
+        stopMusic();
+        gameState = playState;
     }
 
     public void startGameThread() {
@@ -117,7 +129,20 @@ public class GamePanel extends JPanel implements Runnable {
 
     //
     public void update() {
-        player.update();
+        if(gameState == playState){
+            //PLAYER
+            player.update();
+            //NPC
+            for(int i=0;i<npc.length;i++){
+                if(npc[i] != null){
+                    npc[i].update();
+                }
+            }
+
+        }
+        if(gameState == pauseState){
+            //nothing
+        }
     }
 
     public void paintComponent(Graphics g) {
@@ -140,6 +165,13 @@ public class GamePanel extends JPanel implements Runnable {
                 obj[i].draw(g2,this);
             }
         }
+        //NPC
+        for(int i=0; i<npc.length;i++){
+            if(npc[i] != null){
+                npc[i].draw(g2);
+            }
+        }
+
         //PLAYER
         player.draw(g2);
         // UI

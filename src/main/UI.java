@@ -10,8 +10,9 @@ import java.text.DecimalFormat;
 
 public class UI {
     GamePanel gp;
+    Graphics2D g2;
     Font arial_40, arial_80B;//เก็บ font แบบ arial;
-    BufferedImage keyImage; //เก็บภาพกุญแจ
+//    BufferedImage keyImage; //เก็บภาพกุญแจ
     public boolean messageOn = false; //เช็คว่าจะให้ข้อความโชว์บนจอไหม
     public String message = ""; //ข้อความที่แสดงบนจอ
     public int messageCounter = 0;
@@ -24,8 +25,8 @@ public class UI {
         this.gp = gp;
         arial_40 = new Font("Arial",Font.PLAIN,40);
         arial_80B = new Font("Arial",Font.BOLD,80);
-        OBJ_Key key = new OBJ_Key(gp);
-        keyImage = key.image;
+//        OBJ_Key key = new OBJ_Key(gp);
+//        keyImage = key.image;
     }
 
     public void showMessage(String text){
@@ -35,65 +36,32 @@ public class UI {
     }
 
     public void draw(Graphics2D g2){
+        this.g2 = g2;
 
-        if(gameFinished == true){ //Game done version 1
+        g2.setFont(arial_40);
+        g2.setColor(Color.white);
 
-            g2.setFont(arial_40);
-            g2.setColor(Color.white);
-
-            String text;
-            int textLength;
-            int x;
-            int y;
-
-            text = "You found the treasure!";
-            // ใช้ FontMetrics เพื่อหาความกว้างของข้อความ
-            FontMetrics metrics = g2.getFontMetrics(arial_40);
-            textLength = metrics.stringWidth(text);
-            x = (gp.getScreenWidth() - textLength) / 2;
-            y = gp.getScreenHeight()/2 - (gp.getTileSize()*3);
-            g2.drawString(text, x, y);
-
-            text = "Your Time is :" + decimalFormat.format(playTime) + "!";
-            textLength = metrics.stringWidth(text);
-            x = (gp.getScreenWidth() - textLength) / 2;
-            y = gp.getScreenHeight()/2 + (gp.getTileSize()*4);
-            g2.drawString(text, x, y);
-
-            g2.setFont(arial_80B);
-            g2.setColor(Color.YELLOW);
-            text = "Congratulations!";
-            metrics = g2.getFontMetrics(arial_80B);
-            textLength=metrics.stringWidth(text);
-            x = (gp.getScreenWidth() - textLength) / 2;
-            y = gp.getScreenHeight()/2 + (gp.getTileSize()*2);
-            g2.drawString(text, x, y);
-            gp.gameThread = null;
-
-        }else{
-            g2.setFont(arial_40);
-            g2.setColor(Color.white);
-            g2.drawImage(keyImage,gp.getTileSize()/2,gp.getTileSize()/2,gp.getTileSize(),gp.getTileSize(),null); //พื้นที่้ที่แสดงผลบนหน้าจอ
-            g2.drawString("X " + gp.player.hasKey,74,65);
-
-            //Time
-            playTime +=(double)1/60;
-            g2.drawString("Time: "+decimalFormat.format(playTime), gp.getTileSize()*11,65);
-
-            //Message
-            if(messageOn == true){
-                g2.setFont(g2.getFont().deriveFont(30F)); //getFont แล้วเซตขนาดเป็น 30 แทน
-                g2.drawString(message,gp.getTileSize()/2,gp.getTileSize()*5);
-
-                messageCounter++;
-
-                if(messageCounter > 120){ //ข้อความจะหายไปหลังจาก 2 วิ
-                    messageCounter = 0;
-                    messageOn = false;
-                }
-            }
+        if(gp.gameState == gp.playState){
+            //Do playState stuff later
         }
+        if(gp.gameState == gp.pauseState){
+            drawPauseScreen(g2);
+        }
+    }
 
+    public void drawPauseScreen(Graphics2D g2){
+        g2.setFont(g2.getFont().deriveFont(Font.PLAIN,80F));
+        String text = "PAUSED";
+        int x = getXforCenteredText(text);
+        int y = gp.getScreenHeight()/2;
 
+        g2.drawString(text,x,y);
+    }
+
+    public int getXforCenteredText(String text){
+        int length ;
+        FontMetrics fontMetrics = g2.getFontMetrics(arial_80B);
+        length = fontMetrics.stringWidth(text);
+        return gp.getScreenWidth()/2 - length/2;
     }
 }
