@@ -33,7 +33,7 @@ public class GamePanel extends JPanel implements Runnable {
 
     //System
     TileManager tileManager = new TileManager(this);
-    KeyHandler keyH = new KeyHandler(this);
+    public KeyHandler keyH = new KeyHandler(this);
     Thread gameThread;
 
     Sound music = new Sound(); //ต้องใช้ 2 อินสแตนเพื่อจัดการกับระบบเสียง
@@ -53,6 +53,7 @@ public class GamePanel extends JPanel implements Runnable {
     public int gameState;
     public final int playState = 1;
     public final int pauseState = 2;
+    public final int dialoguesState = 3;
 
 
     public GamePanel() {

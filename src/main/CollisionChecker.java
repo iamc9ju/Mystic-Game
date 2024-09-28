@@ -153,9 +153,9 @@ public class CollisionChecker {
                     case "up":
                         entity.solidArea.y -= entity.speed;
                         if (entity.solidArea.intersects(target[i].solidArea)) {
-//                            if(target[i].collisionOn == true){
-//                                target[i].collisionOn = true;
-//                            }
+                           entity.collisionOn = true;
+
+
                             index = i;
                         }
                         break;
@@ -163,7 +163,7 @@ public class CollisionChecker {
                         entity.solidArea.y += entity.speed;
                         if (entity.solidArea.intersects(target[i].solidArea)) {
 //                            if(target[i].collisionOn == true){
-//                                entity.collisionOn = true;
+                                entity.collisionOn = true;
 //                            }
                             index = i;
                         }
@@ -172,7 +172,7 @@ public class CollisionChecker {
                         entity.solidArea.x -= entity.speed;
                         if (entity.solidArea.intersects(target[i].solidArea)) {
 //                            if (target[i].collisionOn == true){
-//                                entity.collisionOn = true;
+                                entity.collisionOn = true;
 //                            }
 
                             index = i;
@@ -182,7 +182,7 @@ public class CollisionChecker {
                         entity.solidArea.x += entity.speed;
                         if (entity.solidArea.intersects(target[i].solidArea)) {
 //                            if(target[i].collisionOn == true){
-//                                entity.collisionOn = true;
+                                entity.collisionOn = true;
 //                            }
                             index = i;
                         }

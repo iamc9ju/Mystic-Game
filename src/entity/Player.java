@@ -46,14 +46,14 @@ public class Player  extends Entity{
     }
     public void getPlayerImage() {
 
-        down1 = setup("/player/sword_down_1");
-        down2 = setup("/player/sword_down_2");
-        right1 = setup("/player/sword_right_1");
-        right2 = setup("/player/sword_right_2");
-        left1 = setup("/player/sword_left_1");
-        left2 = setup("/player/sword_left_2");
-        up1 = setup("/player/sword_up_1");
-        up2 = setup("/player/sword_up_2");
+        down1 = setup("/player/john_down_1");
+        down2 = setup("/player/john_down_2");
+        right1 = setup("/player/john_right_1");
+        right2 = setup("/player/john_right_2");
+        left1 = setup("/player/john_left_1");
+        left2 = setup("/player/john_left_2");
+        up1 = setup("/player/john_up_1");
+        up2 = setup("/player/john_up_2");
     }
 
     public BufferedImage setup(String imagePath){
@@ -102,11 +102,11 @@ public class Player  extends Entity{
                 interactNPC(npcIndex);
             }
         }else{
-//            standCounter++;
-//            if(standCounter > 20){
-//                spriteNum = 1; //เมื่อปล่อยปุ่มตัวละครจะอยู่ท่าหยุดนิ่ง
-//                standCounter = 0;
-//            }
+            standCounter++;
+            if(standCounter > 20){
+                spriteNum = 1; //เมื่อปล่อยปุ่มตัวละครจะอยู่ท่าหยุดนิ่ง
+                standCounter = 0;
+            }
         }
 
         if(moving == true){
@@ -189,7 +189,11 @@ public class Player  extends Entity{
 
     public void interactNPC(int i){
         if(i != 999){
-            System.out.println("You are hitting an npc!");
+            if(gp.keyH.enterPressed == true){
+                gp.gameState = gp.dialoguesState;
+                gp.npc[i].speak();
+            }
         }
+        gp.keyH.enterPressed = false;
     }
 }

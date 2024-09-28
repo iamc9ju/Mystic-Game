@@ -17,9 +17,9 @@ public class UI {
     public String message = ""; //ข้อความที่แสดงบนจอ
     public int messageCounter = 0;
     public boolean gameFinished = false;//เกมจบ
+    public String currentDialogue = "";
 
-    public double playTime = 0;
-    DecimalFormat decimalFormat = new DecimalFormat("#0.00"); //ทำให้เวลามีทศนิยมแค่ 2 ตำแหน่ง
+
 
     public  UI (GamePanel gp){
         this.gp = gp;
@@ -47,6 +47,9 @@ public class UI {
         if(gp.gameState == gp.pauseState){
             drawPauseScreen(g2);
         }
+        if(gp.gameState == gp.dialoguesState){
+            drawDialoguesScreen();
+        }
     }
 
     public void drawPauseScreen(Graphics2D g2){
@@ -56,6 +59,31 @@ public class UI {
         int y = gp.getScreenHeight()/2;
 
         g2.drawString(text,x,y);
+    }
+
+    public void drawDialoguesScreen(){
+        //WINDOW
+        int x = gp.getTileSize()*2;
+        int y = gp.getTileSize()/2;
+        int width = gp.getScreenWidth() - (gp.getTileSize()*4);
+        int height = gp.getTileSize() * 4;
+        drawSubWindow(x,y,width,height);
+
+        x += gp.getTileSize();
+        y += gp.getTileSize();
+        g2.drawString(currentDialogue,x,y);
+
+    }
+
+    public void drawSubWindow(int x,int y,int width,int height){
+        Color color = new Color(0,0,0,220);
+        g2.setColor(color);
+        g2.fillRoundRect(x,y,width,height,35,35);
+
+        color = new Color(255,255,255);
+        g2.setColor(color);
+        g2.setStroke(new BasicStroke(5)); //setความกว้างของกรอบสี่เหลี่ยม
+        g2.drawRoundRect(x+5,y+5,width-10,height-10,25,25); //วาดกรอบ4เหลี่ยมสีขาว
     }
 
     public int getXforCenteredText(String text){
